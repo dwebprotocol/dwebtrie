@@ -1,22 +1,21 @@
-# hypertrie
+# dWebTrie
 
 Distributed single writer key/value store
 
 ```
-npm install hypertrie
+npm install dwebtrie
 ```
 
-[![Build Status](https://travis-ci.org/mafintosh/hypertrie.svg?branch=master)](https://travis-ci.org/mafintosh/hypertrie)
 
-Uses a rolling hash array mapped trie to index key/value data on top of a [hypercore](https://github.com/mafintosh/hypercore).
+Uses a rolling hash array mapped trie to index key/value data on top of a [dDatabase](https://github.com/dDatabase).
 
 Useful if you just want a straight forward single writer kv store or if you are looking for a building block for building more complex multiwriter databases on top.
 
 ## Usage
 
 ```js
-const hypertrie = require('hypertrie')
-const db = hypertrie('./trie.db', {valueEncoding: 'json'})
+const dwebtrie = require('dwebtrie')
+const db = dwebtrie('./trie.db', {valueEncoding: 'json'})
 
 db.put('hello', 'world', function () {
   db.get('hello', console.log)
@@ -25,13 +24,13 @@ db.put('hello', 'world', function () {
 
 ## API
 
-#### `db = hypertrie(storage, [key], [options])`
+#### `db = dwebtrie(storage, [key], [options])`
 
 Create a new database. Options include:
 
 ```
 {
-  feed: aHypercore, // use this feed instead of loading storage
+  feed: aDDatabase, // use this feed instead of loading storage
   valueEncoding: 'json', // set value encoding
   subtype: undefined, // set subtype in the header message at feed.get(0) 
   alwaysUpdate: true // perform an ifAvailable update prior to every head operation
@@ -43,7 +42,7 @@ If you set `options.feed` then you can set `storage` to null.
 #### `db.get(key, [options], callback)`
 
 Lookup a key. Returns a result node if found or `null` otherwise.
-Options are passed through to hypercore's get method.
+Options are passed through to dDatabase's get method.
 
 #### `db.put(key, value, [options], [callback])`
 
@@ -128,15 +127,15 @@ Same as checkout but just returns the latest version as a checkout.
 
 #### `stream = db.replicate(isInitiator, [options])`
 
-Returns a hypercore replication stream for the db. Pipe this together with another hypertrie instance.
+Returns a dDatabase replication stream for the db. Pipe this together with another dWebTrie instance.
 
 Replicate takes an `isInitiator` boolean which is used to indicate if this replication stream is the passive/active replicator.
 
-All options are forwarded to hypercores replicate method.
+All options are forwarded to dDatabases replicate method.
 
 #### `ite = db.iterator(prefix, [options])`
 
-Returns a [nanoiterator](https://github.com/mafintosh/nanoiterator) that iterates
+Returns a [nanoiterator](https://github.com/nanoiterator) that iterates
 the latest values in the prefix specified.
 
 Options include:
@@ -150,7 +149,7 @@ Options include:
 
 If you set `recursive: false` it will only iterate the immediate children (similar to readdir)
 
-Additional options are passed through to hypercore's get method.
+Additional options are passed through to dDatabase's get method.
 
 #### `stream = db.createReadStream(prefix, [options])`
 
@@ -166,7 +165,7 @@ A writable stream you can write batch objects to, to update the db.
 
 #### `ite = db.history([options])`
 
-Returns a [nanoiterator](https://github.com/mafintosh/nanoiterator) that iterates over the feed in causal order.
+Returns a [nanoiterator](https://github.com/nanoiterator) that iterates over the feed in causal order.
 
 Options include:
 
@@ -187,7 +186,7 @@ Same as above but as a stream
 
 #### `ite = db.diff(version, [prefix], [options])`
 
-Returns a [nanoiterator](https://github.com/mafintosh/nanoiterator) that iterates the diff between the current db and the version you specifiy. The objects returned look like this
+Returns a [nanoiterator](https://github.com/nanoiterator) that iterates the diff between the current db and the version you specifiy. The objects returned look like this
 
 ```js
 {
