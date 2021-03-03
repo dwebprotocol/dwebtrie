@@ -7,7 +7,7 @@ npm install dwebtrie
 ```
 
 
-Uses a rolling hash array mapped trie to index key/value data on top of a [dDatabase](https://github.com/dDatabase).
+Uses a rolling hash array mapped trie to index key/value data on top of a [dDatabase](https://github.com/dwebprotocol/ddatabase).
 
 Useful if you just want a straight forward single writer kv store or if you are looking for a building block for building more complex multiwriter databases on top.
 
@@ -135,7 +135,7 @@ All options are forwarded to dDatabases replicate method.
 
 #### `ite = db.iterator(prefix, [options])`
 
-Returns a [nanoiterator](https://github.com/nanoiterator) that iterates
+Returns a [nanoiterator](https://github.com/distributedweb/nanoiterator) that iterates
 the latest values in the prefix specified.
 
 Options include:
@@ -165,7 +165,7 @@ A writable stream you can write batch objects to, to update the db.
 
 #### `ite = db.history([options])`
 
-Returns a [nanoiterator](https://github.com/nanoiterator) that iterates over the feed in causal order.
+Returns a [nanoiterator](https://github.com/distributedweb/nanoiterator) that iterates over the feed in causal order.
 
 Options include:
 
@@ -186,7 +186,7 @@ Same as above but as a stream
 
 #### `ite = db.diff(version, [prefix], [options])`
 
-Returns a [nanoiterator](https://github.com/nanoiterator) that iterates the diff between the current db and the version you specifiy. The objects returned look like this
+Returns a [nanoiterator](https://github.com/distributedweb/nanoiterator) that iterates the diff between the current db and the version you specifiy. The objects returned look like this
 
 ```js
 {
