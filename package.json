@@ -1,6 +1,6 @@
 {
   "name": "dwebtrie",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Distributed single writer key/value store for the dWeb.",
   "main": "index.js",
   "dependencies": {
